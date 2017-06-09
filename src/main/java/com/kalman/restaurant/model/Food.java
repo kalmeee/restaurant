@@ -19,6 +19,6 @@ public class Food {
     private Integer id;
     private String name;
     private Integer prize;
-    private FoodType foodType;
+    private String foodType;
 
 }

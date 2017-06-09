@@ -1,0 +1,45 @@
+<section *ngIf="food">
+  <h2>You selected: {{food.name}}</h2>
+  <h3>Description</h3>
+  <p>
+    {{food.prize}} prize {{food.foodType}} Type
+  </p>
+</section>
+<section>
+  <form (ngSubmit)="saveFoodDetails()" #foodForm="ngForm">
+    <div>
+      <label for="name">Name: </label>
+      <input type="text" name="name" required [(ngModel)]="food.name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="error">
+        Leave a name for your food!
+      </div>
+    </div>
+    <div>
+      <label for="prize">Prize: </label>
+      <input type="number" name="prize" [(ngModel)]="food.prize" min=1 max=500 #prize="ngModel">
+
+    </div>
+    <div *ngIf="prize.errors && (prize.dirty || prize.touched)"
+         class="error">
+      <p [hidden]="!prize.errors.min">
+        {{prize.value}}  way too low man.
+      </p>
+      <p [hidden]="!name.errors.max">
+        {{prize.value}} is too high maaaan
+      </p>
+    </div>
+    <div>
+
+      <input type="text" name="foodType" [(ngModel)]="food.foodType">
+    </div>
+    <div>
+      <label for="foodType">Type: </label>
+      <select name="foodType" [(ngModel)]="food.foodType">
+        <option *ngFor="let foodtype of foodTypes" [value]="foodtype">{{foodType}}</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="!foodForm.form.valid">Save</button>
+  </form>
+</section>
+
+<button (click)="gotoFoodsList()">Back to food list</button>
